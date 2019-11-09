@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "98a8b7e62365b39a8c99250e37a24f28",
+    "content-hash": "95fd3d89f72e455e9f13828f95735810",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1388,6 +1388,46 @@
                 "service proxies"
             ],
             "time": "2019-08-10T08:37:15+00:00"
+        },
+        {
+            "name": "phoenyx-studio/downloader",
+            "version": "v0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phoenyx08/downloader.git",
+                "reference": "4bf8b32e5f4d9d7df2b86a1768405a3ce8f97a93"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phoenyx08/downloader/zipball/4bf8b32e5f4d9d7df2b86a1768405a3ce8f97a93",
+                "reference": "4bf8b32e5f4d9d7df2b86a1768405a3ce8f97a93",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "PhoenyxStudio\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yuriy Serdyuk",
+                    "email": "yury@serdyuk.pp.ua"
+                }
+            ],
+            "description": "Simple downloader for a webpage source code",
+            "time": "2019-10-20T16:14:13+00:00"
         },
         {
             "name": "psr/cache",
