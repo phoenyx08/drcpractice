@@ -93,6 +93,9 @@
     "phoenyx-studio/downloader": {
         "version": "v0.1.1"
     },
+    "phoenyx-studio/parser": {
+        "version": "dev-master"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },

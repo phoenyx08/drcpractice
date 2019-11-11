@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "95fd3d89f72e455e9f13828f95735810",
+    "content-hash": "0d7373a1e317dbf7a3c1e57902b3db42",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1428,6 +1428,38 @@
             ],
             "description": "Simple downloader for a webpage source code",
             "time": "2019-10-20T16:14:13+00:00"
+        },
+        {
+            "name": "phoenyx-studio/parser",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phoenyx08/parser.git",
+                "reference": "62083d4f18844b204a01f9b6c23585eab0f4eed6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phoenyx08/parser/zipball/62083d4f18844b204a01f9b6c23585eab0f4eed6",
+                "reference": "62083d4f18844b204a01f9b6c23585eab0f4eed6",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phoenyx-studio/downloader": "v0.3.0-alpha",
+                "phpunit/phpunit": "^8.4"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yuriy Serdyuk",
+                    "email": "yury@serdyuk.pp.ua"
+                }
+            ],
+            "description": "Simple PHP-library for DOM to Object parsing",
+            "time": "2019-11-11T20:05:42+00:00"
         },
         {
             "name": "psr/cache",
@@ -4091,7 +4123,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "phoenyx-studio/parser": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
