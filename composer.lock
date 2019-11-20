@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0d7373a1e317dbf7a3c1e57902b3db42",
+    "content-hash": "b6ebc405260774a816f75aa43d528bd8",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1391,19 +1391,20 @@
         },
         {
             "name": "phoenyx-studio/downloader",
-            "version": "v0.1.1",
+            "version": "v1.0.0-alpha",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phoenyx08/downloader.git",
-                "reference": "4bf8b32e5f4d9d7df2b86a1768405a3ce8f97a93"
+                "reference": "242f789dff645af95017fca3a9bd3f3ccdaebfc0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phoenyx08/downloader/zipball/4bf8b32e5f4d9d7df2b86a1768405a3ce8f97a93",
-                "reference": "4bf8b32e5f4d9d7df2b86a1768405a3ce8f97a93",
+                "url": "https://api.github.com/repos/phoenyx08/downloader/zipball/242f789dff645af95017fca3a9bd3f3ccdaebfc0",
+                "reference": "242f789dff645af95017fca3a9bd3f3ccdaebfc0",
                 "shasum": ""
             },
             "require": {
+                "ext-curl": "*",
                 "ext-dom": "*",
                 "php": "^7.1"
             },
@@ -1411,6 +1412,11 @@
                 "phpunit/phpunit": "^7.5"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "PhoenyxStudio\\": "src/"
@@ -1427,7 +1433,7 @@
                 }
             ],
             "description": "Simple downloader for a webpage source code",
-            "time": "2019-10-20T16:14:13+00:00"
+            "time": "2019-11-19T20:55:14+00:00"
         },
         {
             "name": "phoenyx-studio/parser",
@@ -3665,6 +3671,49 @@
             "time": "2019-08-07T11:52:19+00:00"
         },
         {
+            "name": "symfony/thanks",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/thanks.git",
+                "reference": "9474a631b52737c623b6aeba22f00bbc003251da"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/thanks/zipball/9474a631b52737c623b6aeba22f00bbc003251da",
+                "reference": "9474a631b52737c623b6aeba22f00bbc003251da",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.0",
+                "php": "^5.5.9|^7.0.0"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "class": "Symfony\\Thanks\\Thanks"
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Thanks\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                }
+            ],
+            "description": "Give thanks (in the form of a GitHub ⭐) to your fellow PHP package maintainers (not limited to Symfony components)!",
+            "time": "2018-08-24T14:08:13+00:00"
+        },
+        {
             "name": "symfony/var-exporter",
             "version": "v4.3.5",
             "source": {
@@ -4124,6 +4173,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "phoenyx-studio/downloader": 15,
         "phoenyx-studio/parser": 20
     },
     "prefer-stable": false,
