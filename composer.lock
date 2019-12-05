@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "59a90c6ac857432528e38bf0d526c6ee",
+    "content-hash": "9827ce1ff314a83c688d62ff1afcbb3b",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1611,16 +1611,16 @@
         },
         {
             "name": "symfony/cache",
-            "version": "v4.3.8",
+            "version": "v4.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/cache.git",
-                "reference": "83dca34362a0aba2b93aa1226dac6ef7cfea1262"
+                "reference": "2a7bcc592adcaab9efc165bbced5a91fe905fad4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/cache/zipball/83dca34362a0aba2b93aa1226dac6ef7cfea1262",
-                "reference": "83dca34362a0aba2b93aa1226dac6ef7cfea1262",
+                "url": "https://api.github.com/repos/symfony/cache/zipball/2a7bcc592adcaab9efc165bbced5a91fe905fad4",
+                "reference": "2a7bcc592adcaab9efc165bbced5a91fe905fad4",
                 "shasum": ""
             },
             "require": {
@@ -1685,7 +1685,7 @@
                 "caching",
                 "psr6"
             ],
-            "time": "2019-11-12T13:07:20+00:00"
+            "time": "2019-12-01T10:50:31+00:00"
         },
         {
             "name": "symfony/cache-contracts",
@@ -3499,16 +3499,16 @@
         },
         {
             "name": "symfony/security-http",
-            "version": "v4.3.8",
+            "version": "v4.3.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/security-http.git",
-                "reference": "290b23a46a932746c4cf3c313d59d99f82af2a87"
+                "reference": "75e96df3a1b9b38c67e2fa208894f72dae5e1147"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/security-http/zipball/290b23a46a932746c4cf3c313d59d99f82af2a87",
-                "reference": "290b23a46a932746c4cf3c313d59d99f82af2a87",
+                "url": "https://api.github.com/repos/symfony/security-http/zipball/75e96df3a1b9b38c67e2fa208894f72dae5e1147",
+                "reference": "75e96df3a1b9b38c67e2fa208894f72dae5e1147",
                 "shasum": ""
             },
             "require": {
@@ -3560,7 +3560,7 @@
             ],
             "description": "Symfony Security Component - HTTP Integration",
             "homepage": "https://symfony.com",
-            "time": "2019-11-12T13:12:56+00:00"
+            "time": "2019-11-30T13:16:45+00:00"
         },
         {
             "name": "symfony/service-contracts",
