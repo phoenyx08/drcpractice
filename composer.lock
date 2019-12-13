@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9827ce1ff314a83c688d62ff1afcbb3b",
+    "content-hash": "efc2906d7e7b31772fe26c21d99415b0",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1437,23 +1437,37 @@
         },
         {
             "name": "phoenyx-studio/parser",
-            "version": "dev-master",
+            "version": "v0.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phoenyx08/parser.git",
-                "reference": "62083d4f18844b204a01f9b6c23585eab0f4eed6"
+                "reference": "6547c541d748325d9dd15f06b39d816a060f20dc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phoenyx08/parser/zipball/62083d4f18844b204a01f9b6c23585eab0f4eed6",
-                "reference": "62083d4f18844b204a01f9b6c23585eab0f4eed6",
+                "url": "https://api.github.com/repos/phoenyx08/parser/zipball/6547c541d748325d9dd15f06b39d816a060f20dc",
+                "reference": "6547c541d748325d9dd15f06b39d816a060f20dc",
                 "shasum": ""
             },
+            "require": {
+                "ext-dom": "*",
+                "php": "^7.2"
+            },
             "require-dev": {
-                "phoenyx-studio/downloader": "v0.3.0-alpha",
+                "phoenyx-studio/downloader": "v1.0.0-alpha",
                 "phpunit/phpunit": "^8.4"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PhoenyxStudio\\": "src/"
+                }
+            },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
@@ -1465,7 +1479,7 @@
                 }
             ],
             "description": "Simple PHP-library for DOM to Object parsing",
-            "time": "2019-11-11T20:05:42+00:00"
+            "time": "2019-12-13T20:58:25+00:00"
         },
         {
             "name": "psr/cache",
@@ -4173,8 +4187,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "phoenyx-studio/downloader": 15,
-        "phoenyx-studio/parser": 20
+        "phoenyx-studio/downloader": 15
     },
     "prefer-stable": false,
     "prefer-lowest": false,
