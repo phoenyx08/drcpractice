@@ -86,25 +86,61 @@ class FakeParser extends AbstractParser
         //$query = 'div/div/div[@class="fi-document-table fi-table"]';
         $query = 'div[2]/div/div/div[@class="fi-document-table fi-table"]';
         $list = $xpath->query($query, $root);
+        $yearNodes = [];
         //$doc->setHeading($h1);
         foreach($list as $item) {
-            $listitem = $item;
+            $yearNodes[] = $item;
         }
+        $months = [];
+        foreach($yearNodes as $yearNode){
+            // get year title
+            $query = 'div/div/div/span';
+            $list = $xpath->query($query, $yearNode);
+            $yearName = $list->item(0)->textContent;
+
+            // get months nodes
+            $query = 'div[@class="fi-table-body"]/div';
+            $list = $xpath->query($query, $yearNode);
+            foreach($list as $monthNode){
+                $monthName = $xpath
+                    ->query('div[1]', $monthNode)
+                    ->item(0)->textContent;
+                $monthFullNode = $xpath
+                    ->query('div[2]', $monthNode);
+                //$months[$yearName][$monthName][] = $monthFullNode;
+                foreach($monthFullNode as $monthFullNodeItem) {
+                    $decisionsNodeList = $xpath->query('ul/li', $monthFullNodeItem);
+                    foreach($decisionsNodeList as $decisionsNode) {
+                        $decisionName = $xpath->query('div/span/a', $decisionsNode)->item(0)->textContent;
+                        $decisionLink = $xpath->query('div/span/a', $decisionsNode)->item(0)->getAttribute('href');
+                        $months[$yearName][$monthName][] = [
+                            $decisionName,
+                            $decisionLink,
+                        ];
+                    }
+                }
+            }
+
+
+
+        }
+        print_r($months);
+
 
 
 
 
         // get contents of h1 in content div
         $query = 'body/div[@class="content"]/h1';
-        $h1 = $xpath->query($query, $html)->item(0)->textContent;
-        $doc->setHeading($h1);
+        //$h1 = $xpath->query($query, $html)->item(0)->textContent;
+        //$doc->setHeading($h1);
 
         // get li elements of list in the body
         $query = 'body/div[@class="content"]/ul/li';
-        $lis = $xpath->query($query, $html);
-        foreach ($lis as $li) {
-            $doc->addItem($li->textContent);
-        }
+        //$lis = $xpath->query($query, $html);
+        //foreach ($lis as $li) {
+        //    $doc->addItem($li->textContent);
+        //}
 
         $parseResult->setObject($doc);
 
