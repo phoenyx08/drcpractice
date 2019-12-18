@@ -21,6 +21,18 @@ class FakeParser extends AbstractParser
     protected $xpath;
     protected $rootXpath = '/section';
     private $yearNodesXpath = 'div[2]/div/div/div[@class="fi-document-table fi-table"]';
+    private $yearLabelXpath = 'div/div/div/span';
+    private $monthNodesXpath = 'div[@class="fi-table-body"]/div';
+    private $monthNameXpath = 'div[1]';
+    private $decisionsListNodeXpath = 'div[2]';
+    private $decisionsNodesXpath = 'ul/li';
+    private $decisionXpath = 'div/span/a';
+
+    // Collections of DomElements
+    private $yearNodes = [];
+    private $monthNodes = [];
+
+    private $decisions = [];
 
     private function init()
     {
@@ -29,7 +41,7 @@ class FakeParser extends AbstractParser
         $this->xpath = new DOMXPath($this->domDocument);
     }
 
-    private function getFirstElementByXpath(string $xpath, DOMElement $element)
+    private function getFirstElementByXpath(string $xpath, \DOMElement $element)
     {
         return $this->xpath
             ->query($xpath, $element)
@@ -60,13 +72,51 @@ class FakeParser extends AbstractParser
 
         $root = $this->getRootElement();
 
-        $list = $this->getElementsByXpath($this->yearNodesXpath, $root);
-        $yearNodes = [];
+        $yearNodes = $this->getElementsByXpath($this->yearNodesXpath, $root);
 
-        foreach($list as $item) {
-            $yearNodes[] = $item;
+        foreach($yearNodes as $yearNode) {
+            $yearLabel = $this->getFirstElementByXpath($this->yearLabelXpath, $yearNode)->textContent;
+            $this->yearNodes[$yearLabel] = $yearNode;
         }
-        $months = [];
+
+        $yearNodes = $this->yearNodes;
+
+        foreach($this->yearNodes as $nodeKey => $nodeValue) {
+            $monthYear = $nodeKey;
+
+            $monthNodes = $this->getElementsByXpath($this->monthNodesXpath, $nodeValue);
+            foreach($monthNodes as $monthNode) {
+                $monthName = $this->getFirstElementByXpath($this->monthNameXpath, $monthNode)->textContent;
+                $decisionsListNode = $this->getFirstElementByXpath($this->decisionsListNodeXpath, $monthNode);
+                $this->monthNodes[] = [
+                    'year' => $monthYear,
+                    'name' => $monthName,
+                    'list' => $decisionsListNode,
+                ];
+            }
+        }
+
+        foreach($this->monthNodes as $monthNode) {
+            $decisionsNodes = $this->getElementsByXpath($this->decisionsNodesXpath, $monthNode['list']);
+            foreach($decisionsNodes as $decisionNode) {
+                $decision = $this->getFirstElementByXpath($this->decisionXpath, $decisionNode);
+                $decisionName = $decision->textContent;
+                $decisionLink = $decision->getAttribute('href');
+
+                $this->decisions[] = [
+                    'year' => $monthNode['year'],
+                    'month' => $monthNode['name'],
+                    'name' => $decisionName,
+                    'link' => $decisionLink,
+                ];
+            }
+        }
+
+        foreach($this->decisions as $decision) {
+            echo $decision['year'] . ' ' . $decision['month'] . ' ' . $decision['name'] . ' ' . $decision['link'] . PHP_EOL;
+        }
+
+        /*$months = [];
         foreach($yearNodes as $yearNode) {
             // get year title
             $query = 'div/div/div/span';
@@ -99,7 +149,7 @@ class FakeParser extends AbstractParser
 
 
         }
-        print_r($months);
+        print_r($months);*/
 
         //$parseResult->setObject($doc);
 
