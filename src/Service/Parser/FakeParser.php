@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Service;
+namespace App\Service\Parser;
 
 use PhoenyxStudio\Parser\AbstractParser;
 use PhoenyxStudio\Parser\ParseResult\IParseResult;
 use PhoenyxStudio\Parser\ParseResult\GeneralParseResult;
 use App\Entity\Decision;
 use App\Entity\Category;
+use App\Classes\DecisionParseResultItem;
 use DOMDocument;
 use DOMXPath;
 
@@ -103,55 +104,31 @@ class FakeParser extends AbstractParser
                 $decisionName = $decision->textContent;
                 $decisionLink = $decision->getAttribute('href');
 
-                $this->decisions[] = [
-                    'year' => $monthNode['year'],
-                    'month' => $monthNode['name'],
-                    'name' => $decisionName,
-                    'link' => $decisionLink,
-                ];
+                $decision = new \stdClass();
+                $decision->Year = $monthNode['year'];
+                $decision->Month = $monthNode['name'];
+                $decision->Name = $decisionName;
+                $decision->Link = $decisionLink;
+                $decision->Category = 'solidarity';
+
+
+                $this->decisions[] = $decision;
             }
         }
+
+        $model = new \stdClass();
+        $model->decisionsList = [];
 
         foreach($this->decisions as $decision) {
-            echo $decision['year'] . ' ' . $decision['month'] . ' ' . $decision['name'] . ' ' . $decision['link'] . PHP_EOL;
+            $decisionObject = DecisionParseResultItem::fromObject($decision);
+            $model->decisionsList[] = $decisionObject;
         }
 
-        /*$months = [];
-        foreach($yearNodes as $yearNode) {
-            // get year title
-            $query = 'div/div/div/span';
-            $list = $xpath->query($query, $yearNode);
-            $yearName = $list->item(0)->textContent;
-
-            // get months nodes
-            $query = 'div[@class="fi-table-body"]/div';
-            $list = $xpath->query($query, $yearNode);
-            foreach($list as $monthNode){
-                $monthName = $xpath
-                    ->query('div[1]', $monthNode)
-                    ->item(0)->textContent;
-                $monthFullNode = $xpath
-                    ->query('div[2]', $monthNode);
-                //$months[$yearName][$monthName][] = $monthFullNode;
-                foreach($monthFullNode as $monthFullNodeItem) {
-                    $decisionsNodeList = $xpath->query('ul/li', $monthFullNodeItem);
-                    foreach($decisionsNodeList as $decisionsNode) {
-                        $decisionName = $xpath->query('div/span/a', $decisionsNode)->item(0)->textContent;
-                        $decisionLink = $xpath->query('div/span/a', $decisionsNode)->item(0)->getAttribute('href');
-                        $months[$yearName][$monthName][] = [
-                            $decisionName,
-                            $decisionLink,
-                        ];
-                    }
-                }
-            }
 
 
 
-        }
-        print_r($months);*/
 
-        //$parseResult->setObject($doc);
+        $parseResult->setObject($model);
 
         return $parseResult;
     }
