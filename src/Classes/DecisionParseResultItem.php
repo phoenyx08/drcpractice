@@ -4,15 +4,15 @@ namespace App\Classes;
 
 
 use App\Entity\Decision;
-//use PhoenyxStudio\Parser\ParseResultListItem\IParseResultListItem;
+use PhoenyxStudio\Parser\ParseResultListItem\IParseResultListItem;
 //use PhoenyxStudio\Parser\ParseResultListItem\stdClass;
 use App\Entity\Category;
 
-class DecisionParseResultItem
+class DecisionParseResultItem implements IParseResultListItem
 {
     private static $decision;
 
-    public static function fromObject(\stdClass $object)
+    public static function fromObject(object $object)
     {
         self::$decision = new Decision();
         self::$decision->setYear($object->Year)
@@ -30,7 +30,7 @@ class DecisionParseResultItem
         return $category;
     }
 
-    private function monthAbbrToInt(string $abbreviation) : int
+    private function monthAbbrToInt(string $abbreviation): int
     {
         $accordance = [
             'Jan' => 1,
@@ -53,3 +53,4 @@ class DecisionParseResultItem
         return 0;
     }
 }
+
