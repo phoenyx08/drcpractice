@@ -7,7 +7,7 @@
         "ext-iconv": "*",
         "doctrine/annotations": "^1.8",
         "phoenyx-studio/downloader": "1.0.0-alpha",
-        "phoenyx-studio/parser": "v0.1.1",
+        "phoenyx-studio/parser": "v0.1.2",
         "symfony/cache": "4.3.9",
         "symfony/console": "4.3.*",
         "symfony/dotenv": "4.3.*",

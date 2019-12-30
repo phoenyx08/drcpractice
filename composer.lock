@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "efc2906d7e7b31772fe26c21d99415b0",
+    "content-hash": "08dcb4564ac76f5b2f9181341abde1f6",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1437,16 +1437,16 @@
         },
         {
             "name": "phoenyx-studio/parser",
-            "version": "v0.1.1",
+            "version": "v0.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phoenyx08/parser.git",
-                "reference": "6547c541d748325d9dd15f06b39d816a060f20dc"
+                "reference": "1fef6593d32484c0e0c5972f52d5e16dbabc115b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phoenyx08/parser/zipball/6547c541d748325d9dd15f06b39d816a060f20dc",
-                "reference": "6547c541d748325d9dd15f06b39d816a060f20dc",
+                "url": "https://api.github.com/repos/phoenyx08/parser/zipball/1fef6593d32484c0e0c5972f52d5e16dbabc115b",
+                "reference": "1fef6593d32484c0e0c5972f52d5e16dbabc115b",
                 "shasum": ""
             },
             "require": {
@@ -1479,7 +1479,7 @@
                 }
             ],
             "description": "Simple PHP-library for DOM to Object parsing",
-            "time": "2019-12-13T20:58:25+00:00"
+            "time": "2019-12-30T21:06:19+00:00"
         },
         {
             "name": "psr/cache",
