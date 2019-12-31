@@ -120,13 +120,8 @@ class FakeParser extends AbstractParser
         $model->decisionsList = [];
 
         foreach($this->decisions as $decision) {
-            $decisionObject = DecisionParseResultItem::fromObject($decision);
-            $model->decisionsList[] = $decisionObject;
+            $model->decisionsList[] = $decision;
         }
-
-
-
-
 
         $parseResult->setObject($model);
 
