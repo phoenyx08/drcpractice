@@ -77,7 +77,7 @@ class FillInitialDataCommand extends Command
 
         // Solidarity contribution category
 
-        $link = 'https://www.fifa.com//about-fifa/who-we-are/legal/judicial-bodies/dispute-resolution-chamber/decisions/_libraries/_solidarity_contribution';
+        $link = 'https://www.fifa.com/about-fifa/who-we-are/legal/judicial-bodies/dispute-resolution-chamber/decisions/_libraries/_solidarity_contribution';
 
         $solidarity = $categoriesRepository->findOneBy(['ShortName' => 'solidarity']);
         if ($solidarity == null) {
