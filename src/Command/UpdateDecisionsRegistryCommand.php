@@ -61,32 +61,37 @@ class UpdateDecisionsRegistryCommand extends Command
         $output->writeln('Hello, world!!');
         $output->writeln('You are about to update decisions registry');
         $repository = $this->entityManager->getRepository(Category::class);
-        $category = $repository->findOneBy(['ShortName' => 'solidarity']);
-        if ($category == null) {
-            $category = new Category();
-        }
-        $html = $this->downloader->download('http://google.com');
-        $result = $this->parser->parse($html);
-        $parsedObject = $result->ejectObject();
-        $decisionsRepository = $this->entityManager->getRepository(Decision::class);
-        foreach($parsedObject->decisionsList as $parsedDecision) {
-            $decision = $this->converter->parsedDecisionToDecisionEntity($parsedDecision, $category);
+        $categories = $repository->findAll();
+        foreach ($categories as $category) {
+            $html = $this->downloader->download($category->getLink());
+            $result = $this->parser->parse($html);
+            $parsedObject = $result->ejectObject();
+            $decisionsRepository = $this->entityManager->getRepository(Decision::class);
+            foreach($parsedObject->decisionsList as $parsedDecision) {
+                $decision = $this->converter->parsedDecisionToDecisionEntity($parsedDecision, $category);
 
-            $decisionFromTheDatabase = $decisionsRepository->findOneBy([
-                'Name' => $decision->getName(),
-                'Link' => $decision->getLink(),
-                'Category' => $decision->getCategory(),
-                'Month' => $decision->getMonth(),
-                'Year' => $decision->getYear(),
-            ]);
+                $decisionFromTheDatabase = $decisionsRepository->findOneBy([
+                    'Name' => $decision->getName(),
+                    'Link' => $decision->getLink(),
+                    'Category' => $decision->getCategory(),
+                    'Month' => $decision->getMonth(),
+                    'Year' => $decision->getYear(),
+                ]);
 
-            if ($decisionFromTheDatabase == null) {
-                $this->entityManager->persist($decision);
-                $this->entityManager->flush();
+                if ($decisionFromTheDatabase == null) {
+                    $this->entityManager->persist($decision);
+                    $this->entityManager->flush();
+                }
+
+                $this->decisionsList[] = $decision;
             }
 
-            $this->decisionsList[] = $decision;
         }
+        /*$category = $repository->findOneBy(['ShortName' => 'solidarity']);
+        if ($category == null) {
+            $category = new Category();
+        }*/
+
         $finish = microtime(true);
         $delta = $finish - $start;
         $io->success('Time for execution: ' . $delta . PHP_EOL);
