@@ -72,7 +72,6 @@ class FillInitialDataCommand extends Command
         $categoriesRepository = $this->entityManager->getRepository(Category::class);
 
         // Solidarity contribution category
-
         $link = 'https://www.fifa.com/about-fifa/who-we-are/legal/judicial-bodies/dispute-resolution-chamber/decisions/_libraries/_solidarity_contribution';
 
         $solidarity = $categoriesRepository->findOneBy(['ShortName' => 'solidarity']);
@@ -84,6 +83,21 @@ class FillInitialDataCommand extends Command
                 ->setLink($link)
                 ->setBody($drc);
             $this->entityManager->persist($solidarity);
+            $this->entityManager->flush();
+        }
+
+        // Training compensation category
+        $link = 'https://www.fifa.com/about-fifa/who-we-are/legal/judicial-bodies/dispute-resolution-chamber/decisions/_libraries/_training_compensation';
+
+        $training = $categoriesRepository->findOneBy(['ShortName' => 'training']);
+        if ($training == null) {
+            $training = new Category();
+            $training
+                ->setName('Training compensation')
+                ->setShortName('training')
+                ->setLink($link)
+                ->setBody($drc);
+            $this->entityManager->persist($training);
             $this->entityManager->flush();
         }
 
