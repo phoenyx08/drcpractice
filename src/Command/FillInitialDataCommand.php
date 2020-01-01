@@ -52,9 +52,7 @@ class FillInitialDataCommand extends Command
                 ->setShortName('Disputes resolution chamber');
             $this->entityManager->persist($body);
             $this->entityManager->flush();
-            $drcId = $body->getId();
-        } else {
-            $drcId = $drc->getId();
+            $drc = $body;
         }
 
         // Players status committee
@@ -67,9 +65,7 @@ class FillInitialDataCommand extends Command
                 ->setShortName('Players status committee');
             $this->entityManager->persist($body);
             $this->entityManager->flush();
-            $pscId=$body->getId();
-        } else {
-            $pscId = $psc->getId();
+            $psc = $body;
         }
 
         // Adding dispute categories
