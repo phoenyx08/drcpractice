@@ -87,10 +87,6 @@ class UpdateDecisionsRegistryCommand extends Command
             }
 
         }
-        /*$category = $repository->findOneBy(['ShortName' => 'solidarity']);
-        if ($category == null) {
-            $category = new Category();
-        }*/
 
         $finish = microtime(true);
         $delta = $finish - $start;
