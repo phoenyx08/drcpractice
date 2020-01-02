@@ -8,6 +8,7 @@ use App\Service\Converter;
 use Doctrine\ORM\Mapping\Entity;
 use PhoenyxStudio\Downloader\IDownloader;
 use App\Service\Parser\FakeParser;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -22,6 +23,7 @@ class UpdateDecisionsRegistryCommand extends Command
     private $entityManager;
     private $converter;
     private $decisionsList;
+    private $logger;
     /**
      * @var string
      */
@@ -31,10 +33,12 @@ class UpdateDecisionsRegistryCommand extends Command
         IDownloader $downloader,
         FakeParser $parser,
         EntityManagerInterface $entityManager,
+        LoggerInterface $logger,
         Converter $converter
     )
     {
         $this->entityManager = $entityManager;
+        $this->logger = $logger;
         $this->downloader = $downloader;
         $this->parser = $parser;
         $this->converter = $converter;
@@ -56,6 +60,7 @@ class UpdateDecisionsRegistryCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $this->logger->info('Starting update Decisions registry');
         $io = new SymfonyStyle($input, $output);
         $start = microtime(true);
         $output->writeln('Hello, world!!');

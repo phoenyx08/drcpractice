@@ -2,6 +2,7 @@
 
 namespace App\Service\Parser;
 
+use mysql_xdevapi\Exception;
 use PhoenyxStudio\Parser\AbstractParser;
 use PhoenyxStudio\Parser\ParseResult\IParseResult;
 use PhoenyxStudio\Parser\ParseResult\GeneralParseResult;
@@ -37,6 +38,9 @@ class FakeParser extends AbstractParser
 
     private function init()
     {
+        $this->yearNodes = [];
+        $this->monthNodes = [];
+        $this->decisions = [];
         $this->domDocument = new DOMDocument();
         $this->domDocument->loadXML($this->source);
         $this->xpath = new DOMXPath($this->domDocument);
@@ -62,14 +66,16 @@ class FakeParser extends AbstractParser
             ->item(0);
     }
 
+    /**
+     * @param string $source
+     * @return IParseResult
+     */
     public function parse(string $source) : IParseResult
     {
         $parseResult = new GeneralParseResult();
 
         $this->source = $source;
         $this->init();
-
-        $xpath = $this->xpath;
 
         $root = $this->getRootElement();
 
@@ -79,8 +85,6 @@ class FakeParser extends AbstractParser
             $yearLabel = $this->getFirstElementByXpath($this->yearLabelXpath, $yearNode)->textContent;
             $this->yearNodes[$yearLabel] = $yearNode;
         }
-
-        $yearNodes = $this->yearNodes;
 
         foreach($this->yearNodes as $nodeKey => $nodeValue) {
             $monthYear = $nodeKey;
@@ -98,21 +102,23 @@ class FakeParser extends AbstractParser
         }
 
         foreach($this->monthNodes as $monthNode) {
-            $decisionsNodes = $this->getElementsByXpath($this->decisionsNodesXpath, $monthNode['list']);
-            foreach($decisionsNodes as $decisionNode) {
-                $decision = $this->getFirstElementByXpath($this->decisionXpath, $decisionNode);
-                $decisionName = $decision->textContent;
-                $decisionLink = $decision->getAttribute('href');
+            try {
+                $decisionsNodes = $this->getElementsByXpath($this->decisionsNodesXpath, $monthNode['list']);
+                foreach($decisionsNodes as $decisionNode) {
+                    $decision = $this->getFirstElementByXpath($this->decisionXpath, $decisionNode);
+                    $decisionName = $decision->textContent;
+                    $decisionLink = $decision->getAttribute('href');
 
-                $decision = new \stdClass();
-                $decision->Year = $monthNode['year'];
-                $decision->Month = $monthNode['name'];
-                $decision->Name = $decisionName;
-                $decision->Link = $decisionLink;
-                $decision->Category = 'solidarity';
-
-
-                $this->decisions[] = $decision;
+                    $decision = new \stdClass();
+                    $decision->Year = $monthNode['year'];
+                    $decision->Month = $monthNode['name'];
+                    $decision->Name = $decisionName;
+                    $decision->Link = $decisionLink;
+                    $this->decisions[] = $decision;
+                }
+            } catch (\Exception $e) {
+                echo 'exception' . PHP_EOL;
+                continue;
             }
         }
 
