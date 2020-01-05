@@ -42,7 +42,7 @@ class FakeParser extends AbstractParser
         $this->monthNodes = [];
         $this->decisions = [];
         $this->domDocument = new DOMDocument();
-        $this->domDocument->loadXML($this->source);
+        $this->domDocument->loadXML('<root>' . $this->source . '</root>');
         $this->xpath = new DOMXPath($this->domDocument);
     }
 
@@ -61,6 +61,7 @@ class FakeParser extends AbstractParser
 
     private function getRootElement()
     {
+        return $this->domDocument->getElementsByTagName('section')->item(0);
         return $this->xpath
             ->query($this->rootXpath)
             ->item(0);
