@@ -101,6 +101,96 @@ class FillInitialDataCommand extends Command
             $this->entityManager->flush();
         }
 
+        // Labour disputes category
+        $link = 'https://www.fifa.com/about-fifa/who-we-are/legal/judicial-bodies/dispute-resolution-chamber/decisions/_libraries/_labour_disputes';
+
+        $labour = $categoriesRepository->findOneBy(['ShortName' => 'labour']);
+        if ($labour == null) {
+            $labour = new Category();
+            $labour
+                ->setName('Labour disputes')
+                ->setShortName('labour')
+                ->setLink($link)
+                ->setBody($drc);
+            $this->entityManager->persist($labour);
+            $this->entityManager->flush();
+        }
+
+        // Overdue payables category
+        $link = 'https://www.fifa.com/about-fifa/who-we-are/legal/judicial-bodies/dispute-resolution-chamber/decisions/_libraries/_overdue_payables';
+
+        $overdueDrc = $categoriesRepository->findOneBy(['ShortName' => 'overdueDrc']);
+        if ($overdueDrc == null) {
+            $overdueDrc = new Category();
+            $overdueDrc
+                ->setName('Overdue payables (DRC)')
+                ->setShortName('overdueDrc')
+                ->setLink($link)
+                ->setBody($drc);
+            $this->entityManager->persist($overdueDrc);
+            $this->entityManager->flush();
+        }
+
+        // Club vs Club disputes category
+        $link = 'https://www.fifa.com/about-fifa/who-we-are/legal/judicial-bodies/player-status-committee/decisions/_libraries/_club_vs_club_disputes';
+
+        $club = $categoriesRepository->findOneBy(['ShortName' => 'club']);
+        if ($club == null) {
+            $club = new Category();
+            $club
+                ->setName('Club vs Club disputes')
+                ->setShortName('club')
+                ->setLink($link)
+                ->setBody($psc);
+            $this->entityManager->persist($club);
+            $this->entityManager->flush();
+        }
+
+        // Coach disputes category
+        $link = 'https://www.fifa.com/about-fifa/who-we-are/legal/judicial-bodies/player-status-committee/decisions/_libraries/_coach_disputes';
+
+        $coach = $categoriesRepository->findOneBy(['ShortName' => 'coach']);
+        if ($coach == null) {
+            $coach = new Category();
+            $coach
+                ->setName('Coach disputes')
+                ->setShortName('coach')
+                ->setLink($link)
+                ->setBody($psc);
+            $this->entityManager->persist($coach);
+            $this->entityManager->flush();
+        }
+
+        // Agents disputes category
+        $link = 'https://www.fifa.com/about-fifa/who-we-are/legal/judicial-bodies/player-status-committee/decisions/_libraries/_players_match_agents_disputes';
+
+        $agent = $categoriesRepository->findOneBy(['ShortName' => 'agent']);
+        if ($agent == null) {
+            $agent = new Category();
+            $agent
+                ->setName('Agent disputes')
+                ->setShortName('agent')
+                ->setLink($link)
+                ->setBody($psc);
+            $this->entityManager->persist($agent);
+            $this->entityManager->flush();
+        }
+
+        // Overdue payables (psc) catagory
+        $link = 'https://www.fifa.com/about-fifa/who-we-are/legal/judicial-bodies/player-status-committee/decisions/_libraries/_overdue_payables';
+
+        $overduePsc = $categoriesRepository->findOneBy(['ShortName' => 'overduePsc']);
+        if ($overduePsc == null) {
+            $overduePsc = new Category();
+            $overduePsc
+                ->setName('Overdue payables (PSC)')
+                ->setShortName('overduePsc')
+                ->setLink($link)
+                ->setBody($psc);
+            $this->entityManager->persist($overduePsc);
+            $this->entityManager->flush();
+        }
+
         $io->success('Filling the database with initial data is finished sucessrully');
 
         return 0;
