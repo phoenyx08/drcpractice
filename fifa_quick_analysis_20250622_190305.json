@@ -1,0 +1,37 @@
+{
+  "total_paragraphs": 85236,
+  "sample_size": 1000,
+  "avg_length": 669.234,
+  "pattern_analysis": {
+    "case_ref": 4,
+    "euro_amount": 132,
+    "date_pattern": 209,
+    "article_ref": 42,
+    "claimant": 232,
+    "respondent": 181,
+    "solidarity": 254,
+    "transfer": 329,
+    "player_name": 368,
+    "former_club": 40,
+    "rstp": 4,
+    "fifa": 220,
+    "percentage": 162,
+    "registration": 38
+  },
+  "type_classification": {
+    "header": 8,
+    "facts": 21,
+    "financial": 398,
+    "legal": 100,
+    "procedural": 134,
+    "other": 339
+  },
+  "examples": {
+    "header": "FACTS OF THE CASE Player: Thiago SANTOS SANTANA Date of birth: 4 February 1993 Player passport: issued by the Confederação Brasileira de Futebol (CBF) on 21 January 2021 Season Birthday Club(s) Registration dates Status 2008 15th Palmeiras 22/07/08 – 31/12/08 Amateur (Permanent) 2009 16th Palmeiras ",
+    "facts": "Decision of the Dispute Resolution Chamber passed in Zurich, Switzerland, on 28 September 2006, in the following composition: Slim Aloulou (Tunisia), Chairman Theo van Seggelen (Netherlands), member John Didulica (Australia), member Philippe Diallo (France), member Essa M. Saleh al-Housani (United A",
+    "financial": "Entering into the substance of the matter, the Chamber acknowledged the documentation contained in the file and took note of the fact that the parties to the dispute agree with the amount of solidarity contribution having to be paid to the Claimant of EUR 22,250",
+    "legal": "In continuation, and entering into the substance of the matter, the members of the Chamber carefully studied the facts outlined above and emphasized that, as established in art. 25 of the Regulations in combination with art. 11 of the Regulations governing the Application of the Regulations (hereina",
+    "procedural": "In continuation, the Chamber took note of the fact that, in support of its claim, the Claimant had submitted a copy of the player passport, according to which in the period from the season of the player’s 12th birthday until 23 June 1996, no record could be found with regard to the registration of t",
+    "other": "En este contexto, en aras de evitar posibles contradicciones con los cálculos sugeridos, el Juez Único procedió a analizar la información proporcionada en el caso TMS 4043. 16"
+  }
+}
