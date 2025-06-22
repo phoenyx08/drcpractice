@@ -51,6 +51,7 @@ class FIFAScraper:
             data = response.json()
             decisions = []
             
+            
             if 'topicContent' in data and 'data' in data['topicContent']:
                 for item in data['topicContent']['data']:
                     decision = {
@@ -63,7 +64,17 @@ class FIFAScraper:
                     }
                     decisions.append(decision)
             
-            total_count = data.get('topicContent', {}).get('total', 0)
+            # Try different possible locations for total count
+            total_count = 0
+            if 'topicContent' in data:
+                topic_content = data['topicContent']
+                total_count = topic_content.get('total', 0)
+                # Sometimes total is in different locations
+                if total_count == 0:
+                    total_count = topic_content.get('count', 0)
+                    if total_count == 0 and 'pagination' in topic_content:
+                        total_count = topic_content['pagination'].get('total', 0)
+            
             return decisions, total_count
             
         except Exception as e:
@@ -73,7 +84,7 @@ class FIFAScraper:
     def fetch_all_solidarity_decisions(self, max_requests=None):
         """Fetch all solidarity decisions using pagination"""
         all_decisions = []
-        page_size = 100  # Increase page size for efficiency
+        page_size = 24  # Use default page size to avoid API limits
         offset = 0
         total_count = None
         request_count = 0
@@ -258,19 +269,10 @@ def main():
             print(f"  {i}. {decision['title']} ({decision['date']})")
             print(f"     PDF: {decision['pdf_url']}")
         
-        # Ask user if they want to fetch all decisions
+        # Automatically fetch all decisions
         print(f"\nTotal decisions available: {total_count}")
-        
-        try:
-            user_input = input("Fetch all decisions? (y/n) [n]: ").strip().lower()
-            if user_input in ('y', 'yes'):
-                decisions, total = scraper.fetch_all_solidarity_decisions()
-            else:
-                decisions = sample_decisions
-                print("Using sample data only")
-        except (KeyboardInterrupt, EOFError):
-            print("\nUsing sample data only (no interactive input)")
-            decisions = sample_decisions
+        print("Automatically fetching all decisions...")
+        decisions, total = scraper.fetch_all_solidarity_decisions()
         
         if decisions:
             json_file, urls_file = scraper.save_results(decisions)
