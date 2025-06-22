@@ -1,0 +1,23 @@
+
+        MANUAL EXTRACTION INSTRUCTIONS FOR FIFA SOLIDARITY DECISIONS:
+        
+        1. Visit: https://inside.fifa.com/legal/football-tribunal/dispute-resolution-chamber-decisions
+        
+        2. Wait for page to fully load (all JavaScript content)
+        
+        3. Apply the 'Solidarity Contribution' filter by clicking on it
+        
+        4. Use browser developer tools (F12) to:
+           - Monitor Network tab for API calls when filter is applied
+           - Look for JSON responses containing decision data
+           - Note any pagination endpoints
+        
+        5. Alternative approaches:
+           - Use browser automation (Selenium/Puppeteer) to click through pages
+           - Inspect the page source after JavaScript execution
+           - Look for embedded JSON data in <script> tags
+        
+        6. Key filter ID for solidarity: 5tdw6qM6UYXSHxzpZWTRaw
+        
+        7. Once you identify the API endpoints, you can modify this script to call them directly
+        

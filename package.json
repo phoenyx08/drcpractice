@@ -1,0 +1,15 @@
+{
+  "name": "fifa-solidarity-scraper",
+  "version": "1.0.0",
+  "description": "Scraper for FIFA solidarity mechanism decisions",
+  "main": "solidarity_scraper.js",
+  "scripts": {
+    "scrape": "node solidarity_scraper.js",
+    "install-deps": "npm install"
+  },
+  "dependencies": {
+    "puppeteer": "^21.0.0"
+  },
+  "author": "",
+  "license": "ISC"
+}

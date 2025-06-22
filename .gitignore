@@ -13,3 +13,16 @@
 ###> symfony/web-server-bundle ###
 /.web-server-pid
 ###< symfony/web-server-bundle ###
+
+CLAUDE.md
+.claude
+
+/fifa_solidarity_decisions_20250609_201154.json
+/fifa_solidarity_decisions_20250609_203122.json
+/fifa_solidarity_decisions_20250609_203140.json
+/fifa_solidarity_decisions_urls_20250609_201154.txt
+/fifa_solidarity_decisions_urls_20250609_203122.txt
+/fifa_solidarity_decisions_urls_20250609_203140.txt
+/._.DS_Store
+/node_modules/
+/src/._.DS_Store
