@@ -6,31 +6,21 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\BodyRepository")
- */
+#[ORM\Entity(repositoryClass: "App\Repository\BodyRepository")]
 class Body
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: "integer")]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: "string", length: 255)]
     private $Name;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: "string", length: 255)]
     private $ShortName;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Category", mappedBy="Body", orphanRemoval=true)
-     */
+    #[ORM\OneToMany(targetEntity: "App\Entity\Category", mappedBy: "Body", orphanRemoval: true)]
     private $categories;
 
     public function __construct()
