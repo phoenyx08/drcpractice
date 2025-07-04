@@ -22,7 +22,10 @@
         "symfony/security-bundle": "^6.4",
         "symfony/security-http": "^6.4",
         "symfony/thanks": "^1.1",
-        "symfony/yaml": "^6.4"
+        "symfony/twig-bundle": "6.4.*",
+        "symfony/yaml": "^6.4",
+        "twig/extra-bundle": "^2.12|^3.0",
+        "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^4.1",
