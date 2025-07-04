@@ -22,8 +22,8 @@ class Body
     #[ORM\Column(type: "string", length: 255)]
     private ?string $shortName;
 
-    #[ORM\OneToMany(targetEntity: "App\Entity\Category", mappedBy: "Body", orphanRemoval: true)]
-    private ArrayCollection $categories;
+    #[ORM\OneToMany(targetEntity: "App\Entity\Category", mappedBy: "body", orphanRemoval: true)]
+    private Collection $categories;
 
     public function __construct()
     {
