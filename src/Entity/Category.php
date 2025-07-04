@@ -26,8 +26,8 @@ class Category
     #[ORM\JoinColumn(nullable: false)]
     private ?Body $body;
 
-    #[ORM\OneToMany(targetEntity: "App\Entity\Decision", mappedBy: "Category", orphanRemoval: true)]
-    private ArrayCollection $decisions;
+    #[ORM\OneToMany(targetEntity: "App\Entity\Decision", mappedBy: "category", orphanRemoval: true)]
+    private Collection $decisions;
 
     #[ORM\Column(type: "string", length: 255)]
     private ?string $link;

@@ -6,17 +6,14 @@ use App\Entity\Body;
 use App\Entity\Category;
 use Symfony\Component\Console\Command\Command;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerAggregate;
 
 class FillInitialDataCommand extends Command
 {
-    private $entityManager;
-    protected static $defaultName = 'app:fill-initial-data';
+    private EntityManagerInterface $entityManager;
+    protected static $defaultName = 'app:init';
 
     public function __construct(EntityManagerInterface $entityManager)
     {
@@ -42,9 +39,8 @@ class FillInitialDataCommand extends Command
 
         $bodiesRepository = $this->entityManager->getRepository(Body::class);
 
-
         // Dispute resolution chamber
-        $drc = $bodiesRepository->findOneBy(['Name' => 'drc']);
+        $drc = $bodiesRepository->findOneBy(['name' => 'drc']);
         if ($drc == null) {
             $body = new Body();
             $body
@@ -56,7 +52,7 @@ class FillInitialDataCommand extends Command
         }
 
         // Players status committee
-        $psc = $bodiesRepository->findOneBy(['Name' => 'psc']);
+        $psc = $bodiesRepository->findOneBy(['name' => 'psc']);
         if ($psc == null) {
 
             $body = new Body();
@@ -74,7 +70,7 @@ class FillInitialDataCommand extends Command
         // Solidarity contribution category
         $link = 'https://www.fifa.com/about-fifa/who-we-are/legal/judicial-bodies/dispute-resolution-chamber/decisions/_libraries/_solidarity_contribution';
 
-        $solidarity = $categoriesRepository->findOneBy(['ShortName' => 'solidarity']);
+        $solidarity = $categoriesRepository->findOneBy(['shortName' => 'solidarity']);
         if ($solidarity == null) {
             $solidarity = new Category();
             $solidarity
@@ -89,7 +85,7 @@ class FillInitialDataCommand extends Command
         // Training compensation category
         $link = 'https://www.fifa.com/about-fifa/who-we-are/legal/judicial-bodies/dispute-resolution-chamber/decisions/_libraries/_training_compensation';
 
-        $training = $categoriesRepository->findOneBy(['ShortName' => 'training']);
+        $training = $categoriesRepository->findOneBy(['shortName' => 'training']);
         if ($training == null) {
             $training = new Category();
             $training
@@ -104,7 +100,7 @@ class FillInitialDataCommand extends Command
         // Labour disputes category
         $link = 'https://www.fifa.com/about-fifa/who-we-are/legal/judicial-bodies/dispute-resolution-chamber/decisions/_libraries/_labour_disputes';
 
-        $labour = $categoriesRepository->findOneBy(['ShortName' => 'labour']);
+        $labour = $categoriesRepository->findOneBy(['shortName' => 'labour']);
         if ($labour == null) {
             $labour = new Category();
             $labour
@@ -119,7 +115,7 @@ class FillInitialDataCommand extends Command
         // Overdue payables category
         $link = 'https://www.fifa.com/about-fifa/who-we-are/legal/judicial-bodies/dispute-resolution-chamber/decisions/_libraries/_overdue_payables';
 
-        $overdueDrc = $categoriesRepository->findOneBy(['ShortName' => 'overdueDrc']);
+        $overdueDrc = $categoriesRepository->findOneBy(['shortName' => 'overdueDrc']);
         if ($overdueDrc == null) {
             $overdueDrc = new Category();
             $overdueDrc
@@ -134,7 +130,7 @@ class FillInitialDataCommand extends Command
         // Club vs Club disputes category
         $link = 'https://www.fifa.com/about-fifa/who-we-are/legal/judicial-bodies/player-status-committee/decisions/_libraries/_club_vs_club_disputes';
 
-        $club = $categoriesRepository->findOneBy(['ShortName' => 'club']);
+        $club = $categoriesRepository->findOneBy(['shortName' => 'club']);
         if ($club == null) {
             $club = new Category();
             $club
@@ -149,7 +145,7 @@ class FillInitialDataCommand extends Command
         // Coach disputes category
         $link = 'https://www.fifa.com/about-fifa/who-we-are/legal/judicial-bodies/player-status-committee/decisions/_libraries/_coach_disputes';
 
-        $coach = $categoriesRepository->findOneBy(['ShortName' => 'coach']);
+        $coach = $categoriesRepository->findOneBy(['shortName' => 'coach']);
         if ($coach == null) {
             $coach = new Category();
             $coach
@@ -164,7 +160,7 @@ class FillInitialDataCommand extends Command
         // Agents disputes category
         $link = 'https://www.fifa.com/about-fifa/who-we-are/legal/judicial-bodies/player-status-committee/decisions/_libraries/_players_match_agents_disputes';
 
-        $agent = $categoriesRepository->findOneBy(['ShortName' => 'agent']);
+        $agent = $categoriesRepository->findOneBy(['shortName' => 'agent']);
         if ($agent == null) {
             $agent = new Category();
             $agent
@@ -179,7 +175,7 @@ class FillInitialDataCommand extends Command
         // Overdue payables (psc) catagory
         $link = 'https://www.fifa.com/about-fifa/who-we-are/legal/judicial-bodies/player-status-committee/decisions/_libraries/_overdue_payables';
 
-        $overduePsc = $categoriesRepository->findOneBy(['ShortName' => 'overduePsc']);
+        $overduePsc = $categoriesRepository->findOneBy(['shortName' => 'overduePsc']);
         if ($overduePsc == null) {
             $overduePsc = new Category();
             $overduePsc
