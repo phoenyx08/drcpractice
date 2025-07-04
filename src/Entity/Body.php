@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -12,16 +14,16 @@ class Body
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: "integer")]
-    private $id;
+    private int $id;
 
     #[ORM\Column(type: "string", length: 255)]
-    private $Name;
+    private ?string $name;
 
     #[ORM\Column(type: "string", length: 255)]
-    private $ShortName;
+    private ?string $shortName;
 
     #[ORM\OneToMany(targetEntity: "App\Entity\Category", mappedBy: "Body", orphanRemoval: true)]
-    private $categories;
+    private ArrayCollection $categories;
 
     public function __construct()
     {
@@ -35,24 +37,24 @@ class Body
 
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(string $Name): self
+    public function setName(string $name): self
     {
-        $this->Name = $Name;
+        $this->name = $name;
 
         return $this;
     }
 
     public function getShortName(): ?string
     {
-        return $this->ShortName;
+        return $this->shortName;
     }
 
-    public function setShortName(string $ShortName): self
+    public function setShortName(string $shortName): self
     {
-        $this->ShortName = $ShortName;
+        $this->shortName = $shortName;
 
         return $this;
     }

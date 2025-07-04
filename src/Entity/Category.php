@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -12,23 +14,23 @@ class Category
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: "integer")]
-    private $id;
+    private int $id;
 
     #[ORM\Column(type: "string", length: 255)]
-    private $Name;
+    private ?string $name;
 
     #[ORM\Column(type: "string", length: 255)]
-    private $ShortName;
+    private ?string $shortName;
 
     #[ORM\ManyToOne(targetEntity: "App\Entity\Body", inversedBy: "categories")]
     #[ORM\JoinColumn(nullable: false)]
-    private $Body;
+    private ?Body $body;
 
     #[ORM\OneToMany(targetEntity: "App\Entity\Decision", mappedBy: "Category", orphanRemoval: true)]
-    private $decisions;
+    private ArrayCollection $decisions;
 
     #[ORM\Column(type: "string", length: 255)]
-    private $link;
+    private ?string $link;
 
     public function __construct()
     {
@@ -42,36 +44,36 @@ class Category
 
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(string $Name): self
+    public function setName(string $name): self
     {
-        $this->Name = $Name;
+        $this->name = $name;
 
         return $this;
     }
 
     public function getShortName(): ?string
     {
-        return $this->ShortName;
+        return $this->shortName;
     }
 
-    public function setShortName(string $ShortName): self
+    public function setShortName(string $shortName): self
     {
-        $this->ShortName = $ShortName;
+        $this->shortName = $shortName;
 
         return $this;
     }
 
     public function getBody(): ?Body
     {
-        return $this->Body;
+        return $this->body;
     }
 
-    public function setBody(?Body $Body): self
+    public function setBody(?Body $body): self
     {
-        $this->Body = $Body;
+        $this->body = $body;
 
         return $this;
     }
