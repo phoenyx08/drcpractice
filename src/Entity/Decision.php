@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -10,23 +12,23 @@ class Decision
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: "integer")]
-    private $id;
+    private int $id;
 
     #[ORM\Column(type: "string", length: 255)]
-    private $Name;
+    private ?string $name;
 
     #[ORM\Column(type: "integer")]
-    private $Year;
+    private ?int $year;
 
     #[ORM\Column(type: "integer")]
-    private $Month;
+    private ?int $month;
 
     #[ORM\Column(type: "string", length: 255)]
-    private $Link;
+    private ?string $link;
 
     #[ORM\ManyToOne(targetEntity: "App\Entity\Category", inversedBy: "decisions")]
     #[ORM\JoinColumn(nullable: false)]
-    private $Category;
+    private ?Category $category;
 
     public function getId(): ?int
     {
@@ -35,60 +37,60 @@ class Decision
 
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(string $Name): self
+    public function setName(string $name): self
     {
-        $this->Name = $Name;
+        $this->name = $name;
 
         return $this;
     }
 
     public function getYear(): ?int
     {
-        return $this->Year;
+        return $this->year;
     }
 
-    public function setYear(int $Year): self
+    public function setYear(int $year): self
     {
-        $this->Year = $Year;
+        $this->year = $year;
 
         return $this;
     }
 
     public function getMonth(): ?int
     {
-        return $this->Month;
+        return $this->month;
     }
 
-    public function setMonth(int $Month): self
+    public function setMonth(int $month): self
     {
-        $this->Month = $Month;
+        $this->month = $month;
 
         return $this;
     }
 
     public function getLink(): ?string
     {
-        return $this->Link;
+        return $this->link;
     }
 
-    public function setLink(string $Link): self
+    public function setLink(string $link): self
     {
-        $this->Link = $Link;
+        $this->link = $link;
 
         return $this;
     }
 
     public function getCategory(): ?Category
     {
-        return $this->Category;
+        return $this->category;
     }
 
-    public function setCategory(?Category $Category): self
+    public function setCategory(?Category $category): self
     {
-        $this->Category = $Category;
+        $this->category = $category;
 
         return $this;
     }
