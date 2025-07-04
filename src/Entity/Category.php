@@ -6,42 +6,28 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
- */
+#[ORM\Entity(repositoryClass: "App\Repository\CategoryRepository")]
 class Category
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: "integer")]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: "string", length: 255)]
     private $Name;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: "string", length: 255)]
     private $ShortName;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Body", inversedBy="categories")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: "App\Entity\Body", inversedBy: "categories")]
+    #[ORM\JoinColumn(nullable: false)]
     private $Body;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Decision", mappedBy="Category", orphanRemoval=true)
-     */
+    #[ORM\OneToMany(targetEntity: "App\Entity\Decision", mappedBy: "Category", orphanRemoval: true)]
     private $decisions;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: "string", length: 255)]
     private $link;
 
     public function __construct()
