@@ -1,0 +1,98 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {% if category is defined and category %}
+        {{ category.name }} - Football Tribunal Practice
+    {% else %}
+        Football Tribunal Practice
+    {% endif %}
+{% endblock %}
+
+{% block navigation %}
+    <li class="nav-item {{ activeBody is not defined or activeBody is empty ? 'active' : '' }}">
+        <a href="{{ path('homepage') }}" class="nav-link">Home</a>
+    </li>
+    {% for body in bodies %}
+        <li class="nav-item {{ activeBody is defined and activeBody and activeBody.id == body.id ? 'active' : '' }}">
+            <a href="{{ path('body', {'id': body.id}) }}" class="nav-link">{{ body.name }}</a>
+            {% if body.categories|length > 0 %}
+                <div class="dropdown">
+                    {% for category in body.categories %}
+                        <a href="{{ path('category', {'id': category.id}) }}" class="dropdown-item">{{ category.name }}</a>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </li>
+    {% endfor %}
+{% endblock %}
+
+{% block breadcrumbs %}
+    <nav class="breadcrumbs">
+        <ul class="breadcrumbs-list">
+            <li class="breadcrumbs-item">
+                <a href="{{ path('homepage') }}" class="breadcrumbs-link">Home</a>
+            </li>
+            {% if activeBody is defined and activeBody %}
+                <li class="breadcrumbs-item">
+                    <a href="{{ path('body', {'id': activeBody.id}) }}" class="breadcrumbs-link">{{ activeBody.name }}</a>
+                </li>
+            {% endif %}
+            {% if category is defined and category %}
+                <li class="breadcrumbs-item">{{ category.name }}</li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    {% if category is defined and category %}
+        <h1 class="content-title">{{ category.name }}</h1>
+        <p><strong>Decision Body:</strong> {{ category.body.name }}</p>
+        
+        {% if decisions is defined and decisions|length > 0 %}
+            <ul class="decisions-list">
+                {% for decision in decisions %}
+                    <li class="decision-item">
+                        <a href="{{ decision.link }}" class="decision-link" target="_blank">{{ decision.name }}</a>
+                        <span class="decision-meta">{{ decision.year }}/{{ decision.month|number_format(0, '', '') }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No decisions found for this category.</p>
+        {% endif %}
+    {% elseif activeBody is defined and activeBody %}
+        <h1 class="content-title">{{ activeBody.name }}</h1>
+        <p>Categories under {{ activeBody.name }}:</p>
+        
+        <div class="categories-grid">
+            {% for category in activeBody.categories %}
+                <div class="category-card">
+                    <h3 class="category-title">
+                        <a href="{{ path('category', {'id': category.id}) }}" class="category-link">{{ category.name }}</a>
+                    </h3>
+                    <p><strong>Decisions:</strong> {{ category.decisions|length }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <h1 class="content-title">Football Tribunal Practice</h1>
+        <p>Browse decisions from FIFA's dispute resolution bodies.</p>
+        
+        {% if allCategories is defined and allCategories|length > 0 %}
+            <div class="categories-grid">
+                {% for category in allCategories %}
+                    <div class="category-card">
+                        <h3 class="category-title">
+                            <a href="{{ path('category', {'id': category.id}) }}" class="category-link">{{ category.name }}</a>
+                        </h3>
+                        <p><strong>Decision Body:</strong> {{ category.body.name }}</p>
+                        <p><strong>Decisions:</strong> {{ category.decisions|length }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No categories found. Please run the initial data setup.</p>
+        {% endif %}
+    {% endif %}
+{% endblock %}

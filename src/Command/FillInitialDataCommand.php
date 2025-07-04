@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Command;
 
 use App\Entity\Body;
@@ -45,7 +47,7 @@ class FillInitialDataCommand extends Command
             $body = new Body();
             $body
                 ->setName('drc')
-                ->setShortName('Disputes resolution chamber');
+                ->setShortName('Disputes Resolution Chamber');
             $this->entityManager->persist($body);
             $this->entityManager->flush();
             $drc = $body;
@@ -58,7 +60,7 @@ class FillInitialDataCommand extends Command
             $body = new Body();
             $body
                 ->setName('psc')
-                ->setShortName('Players status committee');
+                ->setShortName('Players\'s Status Chamber');
             $this->entityManager->persist($body);
             $this->entityManager->flush();
             $psc = $body;
@@ -74,7 +76,7 @@ class FillInitialDataCommand extends Command
         if ($solidarity == null) {
             $solidarity = new Category();
             $solidarity
-                ->setName('Solidarity contribution')
+                ->setName('Solidarity Contribution')
                 ->setShortName('solidarity')
                 ->setLink($link)
                 ->setBody($drc);
@@ -89,7 +91,7 @@ class FillInitialDataCommand extends Command
         if ($training == null) {
             $training = new Category();
             $training
-                ->setName('Training compensation')
+                ->setName('Training Compensation')
                 ->setShortName('training')
                 ->setLink($link)
                 ->setBody($drc);
@@ -104,7 +106,7 @@ class FillInitialDataCommand extends Command
         if ($labour == null) {
             $labour = new Category();
             $labour
-                ->setName('Labour disputes')
+                ->setName('Labour Disputes')
                 ->setShortName('labour')
                 ->setLink($link)
                 ->setBody($drc);
@@ -115,15 +117,28 @@ class FillInitialDataCommand extends Command
         // Overdue payables category
         $link = 'https://www.fifa.com/about-fifa/who-we-are/legal/judicial-bodies/dispute-resolution-chamber/decisions/_libraries/_overdue_payables';
 
-        $overdueDrc = $categoriesRepository->findOneBy(['shortName' => 'overdueDrc']);
+        $overdueDrc = $categoriesRepository->findOneBy(['shortName' => 'overdue-drc']);
         if ($overdueDrc == null) {
             $overdueDrc = new Category();
             $overdueDrc
-                ->setName('Overdue payables (DRC)')
-                ->setShortName('overdueDrc')
+                ->setName('Overdue Payables (DRC)')
+                ->setShortName('overdue-drc')
                 ->setLink($link)
                 ->setBody($drc);
             $this->entityManager->persist($overdueDrc);
+            $this->entityManager->flush();
+        }
+
+        // Preliminary Decisions (DRC) category
+        $preliminaryDrc = $categoriesRepository->findOneBy(['shortName' => 'preliminary-drc']);
+        if ($preliminaryDrc == null) {
+            $preliminaryDrc = new Category();
+            $preliminaryDrc
+                ->setName('Preliminary Decisions (DRC)')
+                ->setShortName('preliminary-drc')
+                ->setLink($link)
+                ->setBody($drc);
+            $this->entityManager->persist($preliminaryDrc);
             $this->entityManager->flush();
         }
 
@@ -175,19 +190,34 @@ class FillInitialDataCommand extends Command
         // Overdue payables (psc) catagory
         $link = 'https://www.fifa.com/about-fifa/who-we-are/legal/judicial-bodies/player-status-committee/decisions/_libraries/_overdue_payables';
 
-        $overduePsc = $categoriesRepository->findOneBy(['shortName' => 'overduePsc']);
+        $overduePsc = $categoriesRepository->findOneBy(['shortName' => 'overdue-psc']);
         if ($overduePsc == null) {
             $overduePsc = new Category();
             $overduePsc
                 ->setName('Overdue payables (PSC)')
-                ->setShortName('overduePsc')
+                ->setShortName('overdue-psc')
                 ->setLink($link)
                 ->setBody($psc);
             $this->entityManager->persist($overduePsc);
             $this->entityManager->flush();
         }
 
-        $io->success('Filling the database with initial data is finished sucessrully');
+        // Preliminary Decisions (psc) catagory
+        $link = 'https://www.fifa.com/about-fifa/who-we-are/legal/judicial-bodies/player-status-committee/decisions/_libraries/_overdue_payables';
+
+        $preliminaryPsc = $categoriesRepository->findOneBy(['shortName' => 'preliminary-psc']);
+        if ($preliminaryPsc == null) {
+            $preliminaryPsc = new Category();
+            $preliminaryPsc
+                ->setName('Preliminary Decisions (PSC)')
+                ->setShortName('preliminary-psc')
+                ->setLink($link)
+                ->setBody($psc);
+            $this->entityManager->persist($preliminaryPsc);
+            $this->entityManager->flush();
+        }
+
+        $io->success('Filling the database with initial data is finished successfully');
 
         return 0;
     }
