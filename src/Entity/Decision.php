@@ -30,6 +30,15 @@ class Decision
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category;
 
+    #[ORM\Column(type: "text", nullable: true)]
+    private ?string $summary;
+
+    #[ORM\Column(type: "date", nullable: true)]
+    private ?\DateTimeInterface $date;
+
+    #[ORM\Column(type: "string", length: 255, nullable: true)]
+    private ?string $title;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -91,6 +100,42 @@ class Decision
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getSummary(): ?string
+    {
+        return $this->summary;
+    }
+
+    public function setSummary(?string $summary): self
+    {
+        $this->summary = $summary;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(?\DateTimeInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(?string $title): self
+    {
+        $this->title = $title;
 
         return $this;
     }
