@@ -79,6 +79,7 @@ class FillInitialDataCommand extends Command
                 ->setName('Solidarity Contribution')
                 ->setShortName('solidarity')
                 ->setLink($link)
+                ->setFilterId('5tdw6qM6UYXSHxzpZWTRaw')
                 ->setBody($drc);
             $this->entityManager->persist($solidarity);
             $this->entityManager->flush();
@@ -94,6 +95,7 @@ class FillInitialDataCommand extends Command
                 ->setName('Training Compensation')
                 ->setShortName('training')
                 ->setLink($link)
+                ->setFilterId('0x0a349fb6f6f05d45b6ae5d6385b2aa4e')
                 ->setBody($drc);
             $this->entityManager->persist($training);
             $this->entityManager->flush();
@@ -109,6 +111,7 @@ class FillInitialDataCommand extends Command
                 ->setName('Labour Disputes')
                 ->setShortName('labour')
                 ->setLink($link)
+                ->setFilterId('0xdbdd7aa193c45e4bb22b836f7234ca8c')
                 ->setBody($drc);
             $this->entityManager->persist($labour);
             $this->entityManager->flush();
@@ -124,6 +127,7 @@ class FillInitialDataCommand extends Command
                 ->setName('Overdue Payables (DRC)')
                 ->setShortName('overdue-drc')
                 ->setLink($link)
+                ->setFilterId('0xa21f1662bf6bf54a8a18dfb169f19f2f')
                 ->setBody($drc);
             $this->entityManager->persist($overdueDrc);
             $this->entityManager->flush();
@@ -137,6 +141,7 @@ class FillInitialDataCommand extends Command
                 ->setName('Preliminary Decisions (DRC)')
                 ->setShortName('preliminary-drc')
                 ->setLink($link)
+                ->setFilterId('50K108D7HTQKG0cC1BF2zw')
                 ->setBody($drc);
             $this->entityManager->persist($preliminaryDrc);
             $this->entityManager->flush();
@@ -152,6 +157,7 @@ class FillInitialDataCommand extends Command
                 ->setName('Club vs Club disputes')
                 ->setShortName('club')
                 ->setLink($link)
+                ->setFilterId('4aZS15znbShw74IgyNrBth')
                 ->setBody($psc);
             $this->entityManager->persist($club);
             $this->entityManager->flush();
@@ -167,6 +173,7 @@ class FillInitialDataCommand extends Command
                 ->setName('Coach disputes')
                 ->setShortName('coach')
                 ->setLink($link)
+                ->setFilterId('32c894g2DJcV5Fwk6fmX8P')
                 ->setBody($psc);
             $this->entityManager->persist($coach);
             $this->entityManager->flush();
@@ -182,6 +189,7 @@ class FillInitialDataCommand extends Command
                 ->setName('Agent disputes')
                 ->setShortName('agent')
                 ->setLink($link)
+                ->setFilterId('5Zs7XCOIH3V0PIu73GNNsk')
                 ->setBody($psc);
             $this->entityManager->persist($agent);
             $this->entityManager->flush();
@@ -197,6 +205,7 @@ class FillInitialDataCommand extends Command
                 ->setName('Overdue payables (PSC)')
                 ->setShortName('overdue-psc')
                 ->setLink($link)
+                ->setFilterId('71Tb4ZwcYqRp2Kzg34zxOc')
                 ->setBody($psc);
             $this->entityManager->persist($overduePsc);
             $this->entityManager->flush();
@@ -212,6 +221,7 @@ class FillInitialDataCommand extends Command
                 ->setName('Preliminary Decisions (PSC)')
                 ->setShortName('preliminary-psc')
                 ->setLink($link)
+                ->setFilterId('4nNdQ9hkyE4XLIx8cXT7EQ')
                 ->setBody($psc);
             $this->entityManager->persist($preliminaryPsc);
             $this->entityManager->flush();

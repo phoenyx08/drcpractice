@@ -32,6 +32,9 @@ class Category
     #[ORM\Column(type: "string", length: 255)]
     private ?string $link;
 
+    #[ORM\Column(type: "string", length: 255)]
+    private ?string $filterId;
+
     public function __construct()
     {
         $this->decisions = new ArrayCollection();
@@ -117,6 +120,18 @@ class Category
     public function setLink(string $link): self
     {
         $this->link = $link;
+
+        return $this;
+    }
+
+    public function getFilterId(): ?string
+    {
+        return $this->filterId;
+    }
+
+    public function setFilterId(string $filterId): self
+    {
+        $this->filterId = $filterId;
 
         return $this;
     }
