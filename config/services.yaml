@@ -30,3 +30,15 @@ services:
         class: App\Service\FakeDownloader
 
     PhoenyxStudio\Downloader\IDownloader: '@app.downloader'
+
+    # Summarizer service configuration
+    App\Service\ProcessingService:
+        arguments:
+            $summarizerApiUrl: '%env(SUMMARIZER_API_URL)%'
+            $summarizerApiToken: '%env(SUMMARIZER_API_TOKEN)%'
+            $callbackUrl: '%env(SUMMARIZER_CALLBACK_URL)%'
+
+    # Security service configuration
+    App\Service\SecurityService:
+        arguments:
+            $apiKey: '%env(SUMMARY_API_KEY)%'
