@@ -9,90 +9,313 @@
 {% endblock %}
 
 {% block navigation %}
-    <li class="nav-item {{ activeBody is not defined or activeBody is empty ? 'active' : '' }}">
-        <a href="{{ path('homepage') }}" class="nav-link">Home</a>
-    </li>
+    <a href="{{ path('homepage') }}" class="text-sm font-medium {{ activeBody is not defined or activeBody is empty ? 'text-primary-600' : 'text-gray-700 hover:text-gray-900' }} transition-colors">
+        Home
+    </a>
     {% for body in bodies %}
-        <li class="nav-item {{ activeBody is defined and activeBody and activeBody.id == body.id ? 'active' : '' }}">
-            <a href="{{ path('body', {'id': body.id}) }}" class="nav-link">{{ body.name }}</a>
+        <div class="relative group">
+            <a href="{{ path('body', {'id': body.id}) }}" class="text-sm font-medium {{ activeBody is defined and activeBody and activeBody.id == body.id ? 'text-primary-600' : 'text-gray-700 hover:text-gray-900' }} transition-colors flex items-center">
+                {{ body.name|upper }}
+                {% if body.categories|length > 0 %}
+                    <svg class="ml-1 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                    </svg>
+                {% endif %}
+            </a>
+            
             {% if body.categories|length > 0 %}
-                <div class="dropdown">
+                <div class="absolute top-full left-0 mt-1 w-64 bg-white rounded-md shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                    <div class="py-1">
+                        {% for category in body.categories %}
+                            <a href="{{ path('category', {'id': category.id}) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-gray-900 transition-colors">
+                                {{ category.name }}
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endblock %}
+
+{% block mobile_navigation %}
+    <a href="{{ path('homepage') }}" class="block px-3 py-2 text-base font-medium {{ activeBody is not defined or activeBody is empty ? 'text-primary-600 bg-primary-50' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50' }} rounded-md transition-colors">
+        Home
+    </a>
+    {% for body in bodies %}
+        <div>
+            <a href="{{ path('body', {'id': body.id}) }}" class="block px-3 py-2 text-base font-medium {{ activeBody is defined and activeBody and activeBody.id == body.id ? 'text-primary-600 bg-primary-50' : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50' }} rounded-md transition-colors">
+                {{ body.name|upper }}
+            </a>
+            {% if body.categories|length > 0 %}
+                <div class="ml-4 space-y-1">
                     {% for category in body.categories %}
-                        <a href="{{ path('category', {'id': category.id}) }}" class="dropdown-item">{{ category.name }}</a>
+                        <a href="{{ path('category', {'id': category.id}) }}" class="block px-3 py-2 text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors">
+                            {{ category.name }}
+                        </a>
                     {% endfor %}
                 </div>
             {% endif %}
-        </li>
+        </div>
     {% endfor %}
 {% endblock %}
 
 {% block breadcrumbs %}
-    <nav class="breadcrumbs">
-        <ul class="breadcrumbs-list">
-            <li class="breadcrumbs-item">
-                <a href="{{ path('homepage') }}" class="breadcrumbs-link">Home</a>
-            </li>
-            {% if activeBody is defined and activeBody %}
-                <li class="breadcrumbs-item">
-                    <a href="{{ path('body', {'id': activeBody.id}) }}" class="breadcrumbs-link">{{ activeBody.name }}</a>
-                </li>
-            {% endif %}
-            {% if category is defined and category %}
-                <li class="breadcrumbs-item">{{ category.name }}</li>
-            {% endif %}
-        </ul>
-    </nav>
+    {% if activeBody is defined and activeBody or category is defined and category %}
+        <div class="bg-white border-b border-gray-200">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4">
+                <nav class="flex" aria-label="Breadcrumb">
+                    <ol class="flex items-center space-x-4">
+                        <li>
+                            <div>
+                                <a href="{{ path('homepage') }}" class="text-gray-400 hover:text-gray-500 transition-colors">
+                                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                                    </svg>
+                                    <span class="sr-only">Home</span>
+                                </a>
+                            </div>
+                        </li>
+                        {% if activeBody is defined and activeBody %}
+                            <li>
+                                <div class="flex items-center">
+                                    <svg class="h-5 w-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                    </svg>
+                                    <a href="{{ path('body', {'id': activeBody.id}) }}" class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors">
+                                        {{ activeBody.name|upper }}
+                                    </a>
+                                </div>
+                            </li>
+                        {% endif %}
+                        {% if category is defined and category %}
+                            <li>
+                                <div class="flex items-center">
+                                    <svg class="h-5 w-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                                    </svg>
+                                    <span class="ml-4 text-sm font-medium text-gray-900">{{ category.name }}</span>
+                                </div>
+                            </li>
+                        {% endif %}
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
     {% if category is defined and category %}
-        <h1 class="content-title">{{ category.name }}</h1>
-        <p><strong>Decision Body:</strong> {{ category.body.name }}</p>
-        
-        {% if decisions is defined and decisions|length > 0 %}
-            <ul class="decisions-list">
-                {% for decision in decisions %}
-                    <li class="decision-item">
-                        <a href="{{ decision.link }}" class="decision-link" target="_blank">{{ decision.name }}</a>
-                        <span class="decision-meta">{{ decision.year }}/{{ decision.month|number_format(0, '', '') }}</span>
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No decisions found for this category.</p>
-        {% endif %}
-    {% elseif activeBody is defined and activeBody %}
-        <h1 class="content-title">{{ activeBody.name }}</h1>
-        <p>Categories under {{ activeBody.name }}:</p>
-        
-        <div class="categories-grid">
-            {% for category in activeBody.categories %}
-                <div class="category-card">
-                    <h3 class="category-title">
-                        <a href="{{ path('category', {'id': category.id}) }}" class="category-link">{{ category.name }}</a>
-                    </h3>
-                    <p><strong>Decisions:</strong> {{ category.decisions|length }}</p>
+        <!-- Category Page -->
+        <div class="space-y-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold tracking-tight text-gray-900">{{ category.name }}</h1>
+                    <p class="mt-2 text-lg text-gray-600">{{ category.body.name|upper }} Decisions</p>
                 </div>
-            {% endfor %}
+                <div class="flex items-center space-x-2">
+                    <span class="badge badge-secondary">
+                        {{ decisions|length }} {{ decisions|length == 1 ? 'Decision' : 'Decisions' }}
+                    </span>
+                </div>
+            </div>
+            
+            {% if decisions is defined and decisions|length > 0 %}
+                <div class="card">
+                    <div class="card-content p-0">
+                        <div class="divide-y divide-gray-200">
+                            {% for decision in decisions %}
+                                <div class="p-6 hover:bg-gray-50 transition-colors">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex-1 min-w-0">
+                                            {% if decision.status == 'processed' %}
+                                                <a href="{{ path('decision', {'entityId': decision.entityId}) }}" class="group">
+                                                    <h3 class="text-lg font-medium text-gray-900 group-hover:text-primary-600 transition-colors">
+                                                        {% if decision.title %}
+                                                            {{ decision.title }}
+                                                        {% else %}
+                                                            {{ decision.name }}
+                                                        {% endif %}
+                                                    </h3>
+                                                </a>
+                                            {% else %}
+                                                <h3 class="text-lg font-medium text-gray-500">
+                                                    {% if decision.title %}
+                                                        {{ decision.title }}
+                                                    {% else %}
+                                                        {{ decision.name }}
+                                                    {% endif %}
+                                                </h3>
+                                            {% endif %}
+                                            
+                                            <div class="mt-2 flex items-center space-x-4 text-sm text-gray-500">
+                                                <span class="flex items-center">
+                                                    <svg class="mr-1.5 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5a2.25 2.25 0 002.25-2.25m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5a2.25 2.25 0 012.25 2.25v7.5" />
+                                                    </svg>
+                                                    {{ decision.year }}/{{ decision.month|number_format(0, '', '') }}
+                                                </span>
+                                                
+                                                {% if decision.date %}
+                                                    <span class="flex items-center">
+                                                        <svg class="mr-1.5 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                        </svg>
+                                                        {{ decision.date|date('M j, Y') }}
+                                                    </span>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="flex items-center space-x-3">
+                                            {% if decision.status == 'processed' %}
+                                                <span class="inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-semibold border-transparent bg-green-100 text-green-800">
+                                                    <svg class="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
+                                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                                    </svg>
+                                                    <span>Processed</span>
+                                                </span>
+                                            {% else %}
+                                                <span class="inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-semibold border-transparent bg-yellow-100 text-yellow-800">
+                                                    <svg class="h-3 w-3 animate-spin" fill="none" viewBox="0 0 24 24">
+                                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                                    </svg>
+                                                    <span>Processing</span>
+                                                </span>
+                                            {% endif %}
+                                            
+                                            {% if decision.status == 'processed' %}
+                                                <a href="{{ path('decision', {'entityId': decision.entityId}) }}" class="flex items-center gap-1 h-9 px-3 rounded-md text-sm font-medium bg-primary-600 text-white hover:bg-primary-700 transition-colors">
+                                                    <span>View Details</span>
+                                                </a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="text-center py-12">
+                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <h3 class="mt-2 text-sm font-medium text-gray-900">No decisions found</h3>
+                    <p class="mt-1 text-sm text-gray-500">There are no decisions available for this category yet.</p>
+                </div>
+            {% endif %}
         </div>
-    {% else %}
-        <h1 class="content-title">Football Tribunal Practice</h1>
-        <p>Browse decisions from FIFA's dispute resolution bodies.</p>
         
-        {% if allCategories is defined and allCategories|length > 0 %}
-            <div class="categories-grid">
-                {% for category in allCategories %}
-                    <div class="category-card">
-                        <h3 class="category-title">
-                            <a href="{{ path('category', {'id': category.id}) }}" class="category-link">{{ category.name }}</a>
-                        </h3>
-                        <p><strong>Decision Body:</strong> {{ category.body.name }}</p>
-                        <p><strong>Decisions:</strong> {{ category.decisions|length }}</p>
+    {% elseif activeBody is defined and activeBody %}
+        <!-- Body Page -->
+        <div class="space-y-6">
+            <div>
+                <h1 class="text-3xl font-bold tracking-tight text-gray-900">{{ activeBody.name|upper }}</h1>
+                <p class="mt-2 text-lg text-gray-600">Browse decision categories</p>
+            </div>
+            
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {% for category in activeBody.categories %}
+                    <div class="card hover:shadow-md transition-shadow">
+                        <div class="card-header">
+                            <h3 class="text-lg font-semibold text-gray-900">
+                                <a href="{{ path('category', {'id': category.id}) }}" class="hover:text-primary-600 transition-colors">
+                                    {{ category.name }}
+                                </a>
+                            </h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center text-sm text-gray-500">
+                                    <svg class="mr-1.5 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-4.5V6.375a3.375 3.375 0 00-3.375-3.375H6.75A3.375 3.375 0 003.375 9.75v2.625" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25l-2.07 2.07a2.25 2.25 0 01-3.182 0l-2.828-2.828a2.25 2.25 0 01-.659-1.591V9.75a2.25 2.25 0 012.25-2.25h1.5A2.25 2.25 0 0115.75 9.75v.5a2.25 2.25 0 002.25 2.25z" />
+                                    </svg>
+                                    {{ category.decisions|length }} {{ category.decisions|length == 1 ? 'Decision' : 'Decisions' }}
+                                </div>
+                                <a href="{{ path('category', {'id': category.id}) }}" class="btn btn-secondary btn-sm">
+                                    View
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 {% endfor %}
             </div>
-        {% else %}
-            <p>No categories found. Please run the initial data setup.</p>
-        {% endif %}
+        </div>
+        
+    {% else %}
+        <!-- Homepage -->
+        <div class="space-y-12">
+            <div class="text-center py-12">
+                <h1 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+                    Football Tribunal Practice
+                </h1>
+                <p class="mt-8 text-lg leading-8 text-gray-600 max-w-3xl mx-auto">
+                    Browse decisions from FIFA's dispute resolution bodies. Access comprehensive jurisprudence from the Dispute Resolution Chamber (DRC) and Players' Status Committee (PSC).
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 gap-8 lg:grid-cols-2">
+                {% for body in bodies %}
+                    <div class="card hover:shadow-lg transition-shadow">
+                        <div class="card-header">
+                            <div class="flex items-center justify-between">
+                                <h2 class="text-2xl font-bold text-gray-900">{{ body.name|upper }}</h2>
+                                <div class="h-12 w-12 rounded-lg bg-primary-100 flex items-center justify-center">
+                                    <svg class="h-6 w-6 text-primary-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-4.5V6.375a3.375 3.375 0 00-3.375-3.375H6.75A3.375 3.375 0 003.375 9.75v2.625" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25l-2.07 2.07a2.25 2.25 0 01-3.182 0l-2.828-2.828a2.25 2.25 0 01-.659-1.591V9.75a2.25 2.25 0 012.25-2.25h1.5A2.25 2.25 0 0115.75 9.75v.5a2.25 2.25 0 002.25 2.25z" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <p class="mt-4 text-gray-600 leading-relaxed">
+                                {% if body.name == 'drc' %}
+                                    Dispute Resolution Chamber decisions covering solidarity contributions, training compensation, and labor disputes.
+                                {% else %}
+                                    Players' Status Committee decisions for club disputes, coach matters, and agent regulations.
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div class="card-content">
+                            <div class="space-y-3">
+                                {% for category in body.categories %}
+                                    <div class="flex items-center justify-between p-3 rounded-lg border border-gray-100 hover:border-gray-200 hover:bg-gray-50 transition-colors">
+                                        <div>
+                                            <a href="{{ path('category', {'id': category.id}) }}" class="font-medium text-gray-900 hover:text-primary-600 transition-colors">
+                                                {{ category.name }}
+                                            </a>
+                                        </div>
+                                        <div class="flex items-center space-x-2">
+                                            <span class="text-sm text-gray-500">{{ category.decisions|length }}</span>
+                                            <svg class="h-4 w-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="mt-6">
+                                <a href="{{ path('body', {'id': body.id}) }}" class="btn btn-primary btn-md w-full">
+                                    Browse All Categories
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            
+            {% if allCategories is defined and allCategories|length == 0 %}
+                <div class="text-center py-12">
+                    <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <h3 class="mt-2 text-sm font-medium text-gray-900">No data available</h3>
+                    <p class="mt-1 text-sm text-gray-500">Please run the initial data setup to populate categories and decisions.</p>
+                </div>
+            {% endif %}
+        </div>
     {% endif %}
 {% endblock %}

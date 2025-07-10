@@ -59,4 +59,22 @@ class DefaultController extends AbstractController
             'decisions' => $decisions,
         ]);
     }
+    
+    #[Route('/decision/{entityId}', name: 'decision')]
+    public function decision(string $entityId, DecisionRepository $decisionRepository, BodyRepository $bodyRepository): Response
+    {
+        $decision = $decisionRepository->findOneBy(['entityId' => $entityId]);
+        
+        if (!$decision) {
+            throw $this->createNotFoundException('Decision not found');
+        }
+        
+        $bodies = $bodyRepository->findAll();
+        
+        return $this->render('decision.html.twig', [
+            'decision' => $decision,
+            'bodies' => $bodies,
+            'activeBody' => $decision->getCategory()->getBody(),
+        ]);
+    }
 }
