@@ -39,6 +39,15 @@ class Decision
     #[ORM\Column(type: "string", length: 255, nullable: true)]
     private ?string $title;
 
+    #[ORM\Column(type: "string", length: 36, nullable: true)]
+    private ?string $entityId;
+
+    #[ORM\Column(type: "string", length: 50, nullable: true)]
+    private ?string $status;
+
+    #[ORM\Column(type: "datetime", nullable: true)]
+    private ?\DateTimeInterface $lastUpdated;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -136,6 +145,42 @@ class Decision
     public function setTitle(?string $title): self
     {
         $this->title = $title;
+
+        return $this;
+    }
+
+    public function getEntityId(): ?string
+    {
+        return $this->entityId;
+    }
+
+    public function setEntityId(?string $entityId): self
+    {
+        $this->entityId = $entityId;
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(?string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getLastUpdated(): ?\DateTimeInterface
+    {
+        return $this->lastUpdated;
+    }
+
+    public function setLastUpdated(?\DateTimeInterface $lastUpdated): self
+    {
+        $this->lastUpdated = $lastUpdated;
 
         return $this;
     }

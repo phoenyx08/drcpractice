@@ -19,32 +19,18 @@ class DecisionRepository extends ServiceEntityRepository
         parent::__construct($registry, Decision::class);
     }
 
-    // /**
-    //  * @return Decision[] Returns an array of Decision objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * Find decisions with pending status
+     * 
+     * @return Decision[] Returns an array of Decision objects with pending status
+     */
+    public function findPendingDecisions(): array
     {
         return $this->createQueryBuilder('d')
-            ->andWhere('d.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('d.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('d.status = :status')
+            ->setParameter('status', 'pending')
+            ->orderBy('d.lastUpdated', 'ASC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Decision
-    {
-        return $this->createQueryBuilder('d')
-            ->andWhere('d.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

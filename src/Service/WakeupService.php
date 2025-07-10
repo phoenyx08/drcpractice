@@ -6,6 +6,7 @@ namespace App\Service;
 
 use App\Entity\Category;
 use App\Entity\Decision;
+use App\Service\ProcessingService;
 use App\Repository\CategoryRepository;
 use App\Repository\DecisionRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,7 +24,8 @@ class WakeupService
         private readonly EntityManagerInterface $entityManager,
         private readonly LoggerInterface $logger,
         private readonly CategoryRepository $categoryRepository,
-        private readonly DecisionRepository $decisionRepository
+        private readonly DecisionRepository $decisionRepository,
+        private readonly ProcessingService $processingService
     ) {}
 
     public function processNewDecisions(): int
@@ -33,6 +35,7 @@ class WakeupService
         $categories = $this->categoryRepository->findAll();
         $totalNewDecisions = 0;
 
+        // First phase: Check for new decisions
         foreach ($categories as $category) {
             $this->logger->info('Processing category: ' . $category->getName());
             
@@ -50,8 +53,37 @@ class WakeupService
             }
         }
 
-        $this->logger->info(sprintf('Wakeup process completed. Total new decisions added: %d', $totalNewDecisions));
+        $this->logger->info(sprintf('New decisions phase completed. Total new decisions added: %d', $totalNewDecisions));
+
+        // Second phase: Process pending decisions
+        $this->processPendingDecisions();
+
+        $this->logger->info('Wakeup process completed successfully');
         return $totalNewDecisions;
+    }
+
+    private function processPendingDecisions(): void
+    {
+        $this->logger->info('Starting processing of pending decisions');
+        
+        try {
+            $pendingDecisions = $this->decisionRepository->findPendingDecisions();
+            
+            if (empty($pendingDecisions)) {
+                $this->logger->info('No pending decisions found');
+                return;
+            }
+
+            $this->logger->info(sprintf('Found %d pending decisions for processing', count($pendingDecisions)));
+            
+            // Send pending decisions to processing service for summarization
+            $this->processingService->processDecisionsForSummarization($pendingDecisions);
+            
+            $this->logger->info(sprintf('Sent %d pending decisions to processing service', count($pendingDecisions)));
+            
+        } catch (\Exception $e) {
+            $this->logger->error('Error processing pending decisions: ' . $e->getMessage());
+        }
     }
 
     private function checkCategoryForNewDecisions(Category $category): array
@@ -166,12 +198,19 @@ class WakeupService
 
     private function persistNewDecisions(array $newDecisions, Category $category): void
     {
+        $decisions = [];
         foreach ($newDecisions as $apiDecision) {
             $decision = $this->createDecisionFromApiData($apiDecision, $category);
             $this->entityManager->persist($decision);
+            $decisions[] = $decision;
         }
         
         $this->entityManager->flush();
+        
+        // Send new decisions to processing service for summarization
+        if (!empty($decisions)) {
+            $this->processingService->processDecisionsForSummarization($decisions);
+        }
     }
 
     private function createDecisionFromApiData(array $apiDecision, Category $category): Decision
@@ -189,8 +228,23 @@ class WakeupService
             ->setCategory($category)
             ->setSummary(self::DEFAULT_SUMMARY)
             ->setDate($dateTime)
-            ->setTitle($apiDecision['title']);
+            ->setTitle($apiDecision['title'])
+            ->setEntityId($this->generateUuid())
+            ->setStatus('pending')
+            ->setLastUpdated(new \DateTime());
 
         return $decision;
+    }
+
+    private function generateUuid(): string
+    {
+        return sprintf(
+            '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            mt_rand(0, 0xffff), mt_rand(0, 0xffff),
+            mt_rand(0, 0xffff),
+            mt_rand(0, 0x0fff) | 0x4000,
+            mt_rand(0, 0x3fff) | 0x8000,
+            mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
+        );
     }
 }
