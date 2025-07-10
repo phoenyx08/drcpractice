@@ -1,290 +1,194 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Football Tribunal Practice{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            200: '#bfdbfe',
+                            300: '#93c5fd',
+                            400: '#60a5fa',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                            950: '#172554',
+                        },
+                        gray: {
+                            50: '#f9fafb',
+                            100: '#f3f4f6',
+                            200: '#e5e7eb',
+                            300: '#d1d5db',
+                            400: '#9ca3af',
+                            500: '#6b7280',
+                            600: '#4b5563',
+                            700: '#374151',
+                            800: '#1f2937',
+                            900: '#111827',
+                            950: '#030712',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* Custom component styles inspired by shadcn/ui */
+        .btn {
+            @apply inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-600 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50;
         }
         
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
+        
+        .btn-primary {
+            @apply bg-primary-600 text-white hover:bg-primary-700 active:bg-primary-800;
         }
         
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+        .btn-secondary {
+            @apply bg-gray-100 text-gray-900 hover:bg-gray-200 active:bg-gray-300;
         }
         
-        /* Header */
-        .header {
-            background-color: #0066cc;
-            color: white;
-            padding: 1rem 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        .btn-ghost {
+            @apply hover:bg-gray-100 hover:text-gray-900;
         }
         
-        .header-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+        .btn-sm {
+            @apply h-9 px-3;
         }
         
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
+        .btn-md {
+            @apply h-10 px-4 py-2;
         }
         
-        .site-title {
-            font-size: 1.8rem;
-            font-weight: bold;
+        .btn-lg {
+            @apply h-11 px-8;
         }
         
-        /* Navigation */
-        .nav {
-            background-color: #004499;
-            padding: 0;
+        .card {
+            @apply rounded-lg border border-gray-200 bg-white text-gray-950 shadow-sm;
         }
         
-        .nav-menu {
-            list-style: none;
-            display: flex;
-            flex-wrap: wrap;
+        .card-header {
+            @apply flex flex-col space-y-1.5 p-8;
         }
         
-        .nav-item {
-            position: relative;
+        .card-content {
+            @apply p-8 pt-0;
         }
         
-        .nav-link {
-            display: block;
-            padding: 1rem 1.5rem;
-            color: white;
-            text-decoration: none;
-            transition: background-color 0.3s;
+        .badge {
+            @apply inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
         }
         
-        .nav-link:hover {
-            background-color: #0066cc;
+        .badge-default {
+            @apply border-transparent bg-gray-900 text-gray-50 hover:bg-gray-900/80;
         }
         
-        .nav-item.active .nav-link {
-            background-color: #0066cc;
+        .badge-secondary {
+            @apply border-transparent bg-gray-100 text-gray-900 hover:bg-gray-100/80;
         }
         
-        .dropdown {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background-color: #003366;
-            min-width: 200px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            display: none;
-            z-index: 1000;
+        .badge-warning {
+            @apply border-transparent bg-yellow-100 text-yellow-800 hover:bg-yellow-100/80;
         }
         
-        .nav-item:hover .dropdown {
-            display: block;
-        }
-        
-        .dropdown-item {
-            padding: 0.8rem 1.5rem;
-            color: white;
-            text-decoration: none;
-            display: block;
-            border-bottom: 1px solid #004499;
-        }
-        
-        .dropdown-item:hover {
-            background-color: #004499;
-        }
-        
-        /* Main Content */
-        .main {
-            min-height: calc(100vh - 200px);
-            padding: 2rem 0;
-        }
-        
-        .breadcrumbs {
-            background-color: #f8f9fa;
-            padding: 0.5rem 0;
-            margin-bottom: 2rem;
-            border-radius: 5px;
-        }
-        
-        .breadcrumbs-list {
-            list-style: none;
-            display: flex;
-            align-items: center;
-        }
-        
-        .breadcrumbs-item {
-            color: #666;
-        }
-        
-        .breadcrumbs-item:not(:last-child)::after {
-            content: ' > ';
-            margin: 0 0.5rem;
-            color: #999;
-        }
-        
-        .breadcrumbs-link {
-            color: #0066cc;
-            text-decoration: none;
-        }
-        
-        .breadcrumbs-link:hover {
-            text-decoration: underline;
-        }
-        
-        .content-area {
-            background-color: white;
-            padding: 2rem;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .content-title {
-            color: #0066cc;
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
-        }
-        
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-        
-        .category-card {
-            background-color: #f8f9fa;
-            padding: 1.5rem;
-            border-radius: 5px;
-            border-left: 4px solid #0066cc;
-        }
-        
-        .category-title {
-            color: #0066cc;
-            margin-bottom: 0.5rem;
-            font-size: 1.2rem;
-        }
-        
-        .category-link {
-            color: #0066cc;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        
-        .category-link:hover {
-            text-decoration: underline;
-        }
-        
-        .decisions-list {
-            list-style: none;
-            margin-top: 1rem;
-        }
-        
-        .decision-item {
-            padding: 0.5rem 0;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .decision-link {
-            color: #0066cc;
-            text-decoration: none;
-        }
-        
-        .decision-link:hover {
-            text-decoration: underline;
-        }
-        
-        .decision-meta {
-            color: #666;
-            font-size: 0.9rem;
-            margin-left: 1rem;
-        }
-        
-        /* Footer */
-        .footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 2rem 0;
-            margin-top: 3rem;
-        }
-        
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .nav-menu {
-                flex-direction: column;
-            }
-            
-            .dropdown {
-                position: static;
-                display: block;
-                box-shadow: none;
-                margin-left: 1rem;
-            }
-            
-            .categories-grid {
-                grid-template-columns: 1fr;
-            }
+        .badge-success {
+            @apply border-transparent bg-green-100 text-green-800 hover:bg-green-100/80;
         }
     </style>
     {% block stylesheets %}{% endblock %}
 </head>
-<body>
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">FT</div>
-                <h1 class="site-title">Football Tribunal Practice</h1>
+<body class="h-full bg-gray-50">
+    <div class="min-h-full flex flex-col">
+        <!-- Header -->
+        <header class="bg-white shadow-sm border-b border-gray-200">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="flex h-16 justify-between items-center">
+                    <div class="flex items-center">
+                        <a href="{{ path('homepage') }}" class="flex items-center space-x-3">
+                            <div class="h-8 w-8 rounded-lg bg-primary-600 flex items-center justify-center">
+                                <span class="text-white font-bold text-lg">FT</span>
+                            </div>
+                            <div>
+                                <h1 class="text-xl font-semibold text-gray-900">Football Tribunal</h1>
+                                <p class="text-sm text-gray-500">Practice Database</p>
+                            </div>
+                        </a>
+                    </div>
+                    
+                    <nav class="hidden md:flex space-x-8">
+                        {% block navigation %}{% endblock %}
+                    </nav>
+                    
+                    <!-- Mobile menu button -->
+                    <div class="md:hidden">
+                        <button type="button" class="btn btn-ghost btn-sm" id="mobile-menu-button">
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
             </div>
-        </div>
-    </header>
-    
-    <nav class="nav">
-        <div class="container">
-            <ul class="nav-menu">
-                {% block navigation %}{% endblock %}
-            </ul>
-        </div>
-    </nav>
-    
-    <main class="main">
-        <div class="container">
+            
+            <!-- Mobile menu -->
+            <div class="md:hidden hidden" id="mobile-menu">
+                <div class="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
+                    {% block mobile_navigation %}{% endblock %}
+                </div>
+            </div>
+        </header>
+
+        <!-- Main content -->
+        <main class="flex-1">
             {% block breadcrumbs %}{% endblock %}
             
-            <div class="content-area">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
                 {% block content %}{% endblock %}
             </div>
-        </div>
-    </main>
-    
-    <footer class="footer">
-        <div class="footer-content">
-            <p>&copy; {{ 'now'|date('Y') }} Football Tribunal Practice. All rights reserved.</p>
-        </div>
-    </footer>
+        </main>
+
+        <!-- Footer -->
+        <footer class="mt-auto bg-white border-t border-gray-200">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="flex items-center space-x-3 mb-4 md:mb-0">
+                        <div class="h-6 w-6 rounded bg-primary-600 flex items-center justify-center">
+                            <span class="text-white font-bold text-sm">FT</span>
+                        </div>
+                        <span class="text-gray-600 font-medium">Football Tribunal Practice</span>
+                    </div>
+                    <div class="text-sm text-gray-500">
+                        © {{ 'now'|date('Y') }} Football Tribunal Practice. All rights reserved.
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // Initialize Lucide icons
+        lucide.createIcons();
+    </script>
     
     {% block javascripts %}{% endblock %}
 </body>
