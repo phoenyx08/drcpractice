@@ -21,7 +21,7 @@
         "symfony/mime": "^6.4",
         "symfony/monolog-bundle": "^3.8",
         "symfony/security-bundle": "^6.4",
-        "symfony/security-http": "^6.4",
+        "symfony/security-http": "^7.4",
         "symfony/thanks": "^1.1",
         "symfony/twig-bundle": "6.4.*",
         "symfony/yaml": "^6.4",
